@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.io.*;
 import java.util.*;
 
 public class Main {
@@ -14,6 +15,18 @@ public class Main {
     public static void print(String text, boolean nextLine) {
         if (nextLine) {System.out.println(text);}
         else {System.out.print(text);}
+    }
+
+    public static double stringToDouble(String prompt) {
+        while (true){
+            print(prompt,false);
+            try {
+                return Double.parseDouble(scanner.nextLine().trim());
+            } catch (NumberFormatException e) {
+                print("Error invalid command! Please enter a valid command");
+                stringToDouble(prompt);
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -46,9 +59,7 @@ public class Main {
         print("Enter Name: ",false);
         command = scanner.nextLine();
         workoutRoutine.setName(command);
-        print("length: ",false);
-        command = scanner.nextLine();
-        workoutRoutine.setLength(Double.parseDouble(command));
+        workoutRoutine.setLength(stringToDouble("length in minutes: "));
         workoutRoutineList.add(workoutRoutine);
         print(String.format("Added %s (%.2f minutes)",workoutRoutine.getName(),workoutRoutine.getLength()));
         print("Press Enter to go back to the menu... ",false);
